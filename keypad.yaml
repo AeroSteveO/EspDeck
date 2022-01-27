@@ -1,0 +1,98 @@
+esphome:
+  name: keypad1
+
+esp8266:
+  board: esp12e
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: ""
+
+ota:
+  password: ""
+
+wifi:
+  ssid: "wifi ssid"
+  password: "mypassword"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Keypad1 Fallback Hotspot"
+    password: "setthistosomethingnewandunique"
+
+captive_portal:
+
+binary_sensor:
+  - platform: template
+    name: "Keypad 2 Held"
+    id: key_2_held_state
+  - platform: template
+    name: "Keypad 2 Double Click"
+    id: key_2_double_click_state
+  - platform: template
+    name: "Keypad 2 Click"
+    id: key_2_click_state
+  - platform: gpio
+    name: "Keypad 1"
+    pin: 16
+  - platform: gpio
+    name: "Keypad 2"
+    pin: 5
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_2_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_2_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 2 MultiHeld"
+          - homeassistant.service:
+              service: input_boolean.turn_on
+              data:
+                entity_id: input_boolean.Keypad_2_multiheld
+          - lambda: !lambda |-
+              id(key_2_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_2_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 2 Double Click"
+        - lambda: !lambda |-
+              id(key_2_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_2_double_click_state).publish_state(false);
+  - platform: gpio
+    name: "Keypad 3"
+    pin: 4
+  - platform: gpio
+    name: "Keypad 4"
+    pin: 0
+  - platform: gpio
+    name: "Keypad 5"
+    pin: 2
+  - platform: gpio
+    name: "Keypad 6"
+    pin: 14
+  - platform: gpio
+    name: "Keypad 7"
+    pin: 12
+  - platform: gpio
+    name: "Keypad 8"
+    pin: 13
+  - platform: gpio
+    name: "Keypad 9"
+    pin: 15
+
