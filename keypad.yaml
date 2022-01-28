@@ -27,6 +27,16 @@ captive_portal:
 
 binary_sensor:
   - platform: template
+    name: "Keypad 1 Held"
+    id: key_1_held_state
+  - platform: template
+    name: "Keypad 1 Double Click"
+    id: key_1_double_click_state
+  - platform: template
+    name: "Keypad 1 Click"
+    id: key_1_click_state
+
+  - platform: template
     name: "Keypad 2 Held"
     id: key_2_held_state
   - platform: template
@@ -35,9 +45,110 @@ binary_sensor:
   - platform: template
     name: "Keypad 2 Click"
     id: key_2_click_state
+    
+  - platform: template
+    name: "Keypad 3 Held"
+    id: key_3_held_state
+  - platform: template
+    name: "Keypad 3 Double Click"
+    id: key_3_double_click_state
+  - platform: template
+    name: "Keypad 3 Click"
+    id: key_3_click_state
+    
+  - platform: template
+    name: "Keypad 4 Held"
+    id: key_4_held_state
+  - platform: template
+    name: "Keypad 4 Double Click"
+    id: key_4_double_click_state
+  - platform: template
+    name: "Keypad 4 Click"
+    id: key_4_click_state
+    
+  - platform: template
+    name: "Keypad 5 Held"
+    id: key_5_held_state
+  - platform: template
+    name: "Keypad 5 Double Click"
+    id: key_5_double_click_state
+  - platform: template
+    name: "Keypad 5 Click"
+    id: key_5_click_state
+    
+  - platform: template
+    name: "Keypad 6 Held"
+    id: key_6_held_state
+  - platform: template
+    name: "Keypad 6 Double Click"
+    id: key_6_double_click_state
+  - platform: template
+    name: "Keypad 6 Click"
+    id: key_6_click_state
+    
+  - platform: template
+    name: "Keypad 7 Held"
+    id: key_7_held_state
+  - platform: template
+    name: "Keypad 7 Double Click"
+    id: key_7_double_click_state
+  - platform: template
+    name: "Keypad 7 Click"
+    id: key_7_click_state
+    
+  - platform: template
+    name: "Keypad 8 Held"
+    id: key_8_held_state
+  - platform: template
+    name: "Keypad 8 Double Click"
+    id: key_8_double_click_state
+  - platform: template
+    name: "Keypad 8 Click"
+    id: key_8_click_state
+    
+  - platform: template
+    name: "Keypad 9 Held"
+    id: key_9_held_state
+  - platform: template
+    name: "Keypad 9 Double Click"
+    id: key_9_double_click_state
+  - platform: template
+    name: "Keypad 9 Click"
+    id: key_9_click_state
+    
   - platform: gpio
     name: "Keypad 1"
     pin: 16
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_1_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_1_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 1 MultiHeld"
+          - lambda: !lambda |-
+              id(key_1_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_1_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 1 Double Click"
+        - lambda: !lambda |-
+              id(key_1_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_1_double_click_state).publish_state(false);
+
   - platform: gpio
     name: "Keypad 2"
     pin: 5
@@ -55,10 +166,6 @@ binary_sensor:
         - ON for at least 1s
         then:
           - logger.log: "Key 2 MultiHeld"
-          - homeassistant.service:
-              service: input_boolean.turn_on
-              data:
-                entity_id: input_boolean.Keypad_2_multiheld
           - lambda: !lambda |-
               id(key_2_held_state).publish_state(true);
           - delay: 1s
@@ -77,22 +184,230 @@ binary_sensor:
   - platform: gpio
     name: "Keypad 3"
     pin: 4
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_3_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_3_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 3 MultiHeld"
+          - lambda: !lambda |-
+              id(key_3_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_3_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 3 Double Click"
+        - lambda: !lambda |-
+              id(key_3_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_3_double_click_state).publish_state(false);
+
   - platform: gpio
     name: "Keypad 4"
     pin: 0
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_4_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_4_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 4 MultiHeld"
+          - lambda: !lambda |-
+              id(key_4_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_4_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 4 Double Click"
+        - lambda: !lambda |-
+              id(key_4_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_4_double_click_state).publish_state(false);
+
   - platform: gpio
     name: "Keypad 5"
     pin: 2
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_5_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_5_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 5 MultiHeld"
+          - lambda: !lambda |-
+              id(key_5_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_5_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 5 Double Click"
+        - lambda: !lambda |-
+              id(key_5_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_5_double_click_state).publish_state(false);
+
   - platform: gpio
     name: "Keypad 6"
     pin: 14
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_6_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_6_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 6 MultiHeld"
+          - lambda: !lambda |-
+              id(key_6_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_6_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 6 Double Click"
+        - lambda: !lambda |-
+              id(key_6_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_6_double_click_state).publish_state(false);
+
   - platform: gpio
     name: "Keypad 7"
     pin: 12
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_7_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_7_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 7 MultiHeld"
+          - lambda: !lambda |-
+              id(key_7_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_7_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 7 Double Click"
+        - lambda: !lambda |-
+              id(key_7_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_7_double_click_state).publish_state(false);
+
   - platform: gpio
     name: "Keypad 8"
     pin: 13
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_8_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_8_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 8 MultiHeld"
+          - lambda: !lambda |-
+              id(key_8_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_8_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 8 Double Click"
+        - lambda: !lambda |-
+              id(key_8_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_8_double_click_state).publish_state(false);
+
   - platform: gpio
     name: "Keypad 9"
     pin: 15
-
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_9_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_9_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 9 MultiHeld"
+          - lambda: !lambda |-
+              id(key_9_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_9_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 9 Double Click"
+        - lambda: !lambda |-
+              id(key_9_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_9_double_click_state).publish_state(false);
