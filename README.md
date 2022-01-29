@@ -14,6 +14,8 @@ ESPDeck provides a macropad type input set to Home Assistant based on ESPHome. T
 
 Case design based off of: https://www.thingiverse.com/thing:5204033. I extended the height of the case for my inefficient use of space inside of it, I also made some modifications to better hold the Esp8266
 
+Case design can also be found here: https://www.thingiverse.com/thing:5223223
+
 
 # Wiring
 
