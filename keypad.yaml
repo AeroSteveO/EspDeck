@@ -216,7 +216,13 @@ binary_sensor:
 
   - platform: gpio
     name: "Keypad 4"
-    pin: 0
+    pin:
+      number: 0
+      mode:
+        input: true
+        pulldown: false
+        pullup: true
+      inverted: true
     on_multi_click:
       - timing:
         - ON for at most 950ms
