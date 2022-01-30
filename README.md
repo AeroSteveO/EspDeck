@@ -27,5 +27,6 @@ Case design can also be found here: https://www.thingiverse.com/thing:5223223
 ## Gen2
 Since it seemed like the resistors weren't needed, the wiring can be simplified to one end of the switch going to the digitial IO pin, and the other end to ground, and set up ESPHome to have the internal pullup enabled on the ESP8266 device.
 
-# 
+# Contributing
+Contributions are welcome to the project
 
