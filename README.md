@@ -18,6 +18,14 @@ Case design can also be found here: https://www.thingiverse.com/thing:5223223
 
 
 # Wiring
+# Gen1 Design
+![First Generation Circuit Diagram](/assets/images/circuit-gen1.svg)
+
+## Gen2 Design
+![Second Generation Circuit Diagram](/assets/images/circuit-gen2-full.svg)
+
+
+![Second Generation Circuit Diagram Simplified](/assets/images/circuit-gen2-simplified.svg)
 
 ## Gen1
 3.3V to the switches
