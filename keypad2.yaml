@@ -122,7 +122,6 @@ binary_sensor:
       number: 16
       mode:
         input: true
-        pullup: true
       inverted: true
     on_multi_click:
       - timing:
@@ -425,8 +424,8 @@ binary_sensor:
       number: 15
       mode:
         input: true
-        pullup: true
-      inverted: true
+        pullup: false
+      inverted: false
     on_multi_click:
       - timing:
         - ON for at most 950ms
