@@ -16,6 +16,12 @@ Case design based off of: https://www.thingiverse.com/thing:5204033. I extended 
 
 Case design can also be found here: https://www.thingiverse.com/thing:5223223
 
+# Hardware Used
+  * ESP8266 / NodeMCU
+  * Relegendable KeyCaps (waterslide decal paper can also be used with existing keycaps, especially blank ones)
+  * Mechanical key switches
+  * Hot Glue
+  * 3d printer material
 
 # Wiring
 # Gen1 Design
