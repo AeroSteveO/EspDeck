@@ -27,21 +27,27 @@ Case design can also be found here: https://www.thingiverse.com/thing:5223223
 
 # Wiring
 ## Gen1 Design
+3.3V to the switches
+
+10k to ground for each Digitial IO Pin, as well as a line to the switch
+
 ![First Generation Circuit Diagram](/assets/images/circuit-gen1.svg)
 
 ## Gen2 Design
+Since it seemed like the resistors weren't needed, the wiring can be simplified to one end of the switch going to the digitial IO pin, and the other end to ground, and set up ESPHome to have the internal pullup enabled on the ESP8266 device. Two of the GPIOs on the device cannot be done this way, GPIO16 needs an external pullup resistor, and GPIO15 needs to be inverted (internal pulldown, external pullup).
+
 ![Second Generation Circuit Diagram](/assets/images/circuit-gen2-full.svg)
 
 
 ![Second Generation Circuit Diagram Simplified](/assets/images/circuit-gen2-simplified.svg)
 
-## Gen1
-3.3V to the switches
+# Configuration
 
-10k to ground for each Digitial IO Pin, as well as a line to the switch
+## Gen1
+keypad.yaml
 
 ## Gen2
-Since it seemed like the resistors weren't needed, the wiring can be simplified to one end of the switch going to the digitial IO pin, and the other end to ground, and set up ESPHome to have the internal pullup enabled on the ESP8266 device. Two of the GPIOs on the device cannot be done this way, GPIO16 needs an external pullup resistor, and GPIO15 needs to be inverted (internal pulldown, external pullup).
+keypad2.yaml
 
 # Contributing
 Contributions are welcome to the project
