@@ -11,11 +11,13 @@ ESPDeck provides a macropad type input set to Home Assistant based on ESPHome. T
   * Click and Hold
 
 # Hardware Used
-  * ESP8266 / NodeMCU
-  * Relegendable KeyCaps (waterslide decal paper can also be used with existing keycaps, especially blank ones)
-  * Mechanical key switches
+  * 1 x ESP8266 / NodeMCU
+  * 9 x Relegendable KeyCaps (waterslide decal paper can also be used with existing keycaps, especially blank ones)
+  * 9 x Mechanical key switches
+  * 1 x 10k Resistor
   * Hot Glue
   * 3d printer material
+  * various wire
 
 # Case
 
