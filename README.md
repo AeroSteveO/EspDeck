@@ -1,7 +1,6 @@
 # EspDeck
 
-
-ESPHome Based StreamDeck Type Macro Pad
+This is a StreamDeck inspired macro pad powered by EspHome for use with Home Assistant.
 
 # Functionality
 ESPDeck provides a macropad type input set to Home Assistant based on ESPHome. This includes 3 modes of input for each keyswitch. 
