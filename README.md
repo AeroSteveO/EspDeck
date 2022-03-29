@@ -48,6 +48,13 @@ keypad.yaml
 ## Gen2
 keypad2.yaml
 
+# Printing Instructions
+Print one each of:
+  * MacroPadBottomExtended.stl
+  * MacroPadTop.stl
+
+These can be printed with low infill for speed.
+
 # Contributing
 Contributions are welcome to the project
 
