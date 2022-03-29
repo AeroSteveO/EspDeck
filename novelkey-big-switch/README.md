@@ -8,6 +8,7 @@ Complete with RGB Backlighting
   * 2 x NovelKey "The Big Switch" mechanical keyboard switches
   * 2 x Common Cathode RGB LEDs
   * 2 x 300 ohm resistors
+  * 3 x pairs of 3-pin plugs (I got them originally for WLED strips)
 
 # Printing Instructions
 Print one each of:
