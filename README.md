@@ -9,6 +9,8 @@ ESPDeck provides a macropad type input set to Home Assistant based on ESPHome. T
   * Double Click
   * Click and Hold
 
+See also the ![Novelkey Novelty Big Switch Macropad](/novelkey-big-switch/README.md)
+
 # Hardware Used
   * 1 x ESP8266 / NodeMCU
   * 9 x Relegendable KeyCaps (waterslide decal paper can also be used with existing keycaps, especially blank ones)
