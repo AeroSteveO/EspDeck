@@ -1,8 +1,8 @@
 # Novelkey "The Big Switch" ESP Home MacroPad
-Complete with RGB Backlighting
+This is a simple 2 switch ESP Home based macropad for use with home assistant. I built these for nightstand switches for the lights and overhead fan in the room (or as an excuse to play with the novelkeys big switches). They have RGB backlighting to provide feedback of what functionality is on what key (or whatever else you want to use the lighting for).
 
 # Components:
-  * ESP8266
+  * ESP8266 / NodeMCU
   * 2 x [NovelKey "The Big Switch" mechanical keyboard switches](https://novelkeys.com/products/the-big-switch-series)
   * 2 x [Common Cathode RGB LEDs](https://www.amazon.com/dp/B0749MD16P)
   * 2 x [300 ohm resistors](https://www.amazon.com/dp/B07HDH7QK5)
