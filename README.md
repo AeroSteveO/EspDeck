@@ -27,7 +27,7 @@ Case design based off of: https://www.thingiverse.com/thing:5204033. I extended 
 Case design can also be found here: https://www.thingiverse.com/thing:5223223
 
 # Wiring
-Since it seemed like the resistors weren't needed, the wiring can be simplified to one end of the switch going to the digitial IO pin, and the other end to ground, and set up ESPHome to have the internal pullup enabled on the ESP8266 device. Two of the GPIOs on the device cannot be done this way, GPIO16 needs an external pullup resistor, and GPIO15 needs to be inverted (internal pulldown, external pullup).
+The wiring is simple enough, one end of the switch going to the digitial IO pin, and the other end to ground, and set up ESPHome to have the internal pullup enabled on the ESP8266 device. Two of the GPIOs on the device cannot be done this way, GPIO16 needs an external pullup resistor, and GPIO15 needs to be inverted (internal pulldown, external pullup).
 
 ![Second Generation Circuit Diagram](/assets/images/circuit-gen2-full.svg)
 
