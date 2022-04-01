@@ -1,14 +1,17 @@
 # Novelkey "The Big Switch" ESP Home MacroPad
 Complete with RGB Backlighting
-# Circuit Diagram
-![First Generation Circuit Diagram](/novelkey-big-switch/assets/novelkey2.png)
 
 # Components:
   * ESP8266
-  * 2 x NovelKey "The Big Switch" mechanical keyboard switches
-  * 2 x Common Cathode RGB LEDs
-  * 2 x 300 ohm resistors
-  * 3 x pairs of 3-pin plugs (I got them originally for WLED strips)
+  * 2 x [NovelKey "The Big Switch" mechanical keyboard switches](https://novelkeys.com/products/the-big-switch-series)
+  * 2 x [Common Cathode RGB LEDs](https://www.amazon.com/dp/B0749MD16P)
+  * 2 x [300 ohm resistors](https://www.amazon.com/dp/B07HDH7QK5)
+  * 3 x [pairs of 3-pin JST plugs](https://www.amazon.com/gp/product/B071H5XCN5) (I got them originally for WLED strips)
+  * 4 x [Rubber Feet](https://www.amazon.com/dp/B06XPCLN23)
+
+# Circuit Diagram
+![First Generation Circuit Diagram](/novelkey-big-switch/assets/novelkey2.png)
+
 
 # Printing Instructions
 Print one each of:
