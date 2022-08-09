@@ -2,7 +2,7 @@
 
 This is a StreamDeck inspired macro pad powered by EspHome for use with Home Assistant. Each key has 3 different actions it can perform, single click, double click, and click + hold. These can all be tied to different automations in Home Assistant. This project is made for ESPHome (hardware + ESPHome Configuration).
 
-![Made for ESPHome](/assets/images/made-for-esphome-black-on-white.svg)
+[![Made for ESPHome](/assets/images/made-for-esphome-black-on-white.svg)](https://esphome.io/guides/made_for_esphome.html)
 
 
 # Functionality
