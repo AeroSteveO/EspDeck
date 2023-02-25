@@ -1,0 +1,490 @@
+esphome:
+  name: "keypad3"
+  on_boot:
+    priority: -10
+    # ...
+    then:
+      - lambda: !lambda |-
+              id(key_1_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_2_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_3_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_4_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_5_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_6_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_7_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_8_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_9_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_1_held_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_2_held_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_3_held_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_4_held_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_5_held_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_6_held_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_7_held_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_8_held_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_9_held_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_1_double_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_2_double_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_3_double_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_4_double_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_5_double_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_6_double_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_7_double_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_8_double_click_state).publish_state(false);
+      - lambda: !lambda |-
+              id(key_9_double_click_state).publish_state(false);
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+# This should point to the public location of this yaml file.
+dashboard_import:
+  package_import_url: github://AeroSteveO/EspDeck/edit/main/keypad3.yaml
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esphome-Web"
+    password: "supersecretpassword"
+
+captive_portal:
+    
+    
+matrix_keypad:
+  id: espdeck_keypad
+  rows:
+    - pin: 1
+    - pin: 3
+    - pin: 2
+  columns:
+    - pin: 13
+    - pin: 12
+    - pin: 14
+  keys: "123456789"
+  has_diodes: false
+  
+binary_sensor:
+  - platform: template
+    name: "Keypad 1 Held"
+    id: key_1_held_state
+  - platform: template
+    name: "Keypad 1 Double Click"
+    id: key_1_double_click_state
+  - platform: template
+    name: "Keypad 1 Click"
+    id: key_1_click_state
+
+  - platform: template
+    name: "Keypad 2 Held"
+    id: key_2_held_state
+  - platform: template
+    name: "Keypad 2 Double Click"
+    id: key_2_double_click_state
+  - platform: template
+    name: "Keypad 2 Click"
+    id: key_2_click_state
+    
+  - platform: template
+    name: "Keypad 3 Held"
+    id: key_3_held_state
+  - platform: template
+    name: "Keypad 3 Double Click"
+    id: key_3_double_click_state
+  - platform: template
+    name: "Keypad 3 Click"
+    id: key_3_click_state
+    
+  - platform: template
+    name: "Keypad 4 Held"
+    id: key_4_held_state
+  - platform: template
+    name: "Keypad 4 Double Click"
+    id: key_4_double_click_state
+  - platform: template
+    name: "Keypad 4 Click"
+    id: key_4_click_state
+    
+  - platform: template
+    name: "Keypad 5 Held"
+    id: key_5_held_state
+  - platform: template
+    name: "Keypad 5 Double Click"
+    id: key_5_double_click_state
+  - platform: template
+    name: "Keypad 5 Click"
+    id: key_5_click_state
+    
+  - platform: template
+    name: "Keypad 6 Held"
+    id: key_6_held_state
+  - platform: template
+    name: "Keypad 6 Double Click"
+    id: key_6_double_click_state
+  - platform: template
+    name: "Keypad 6 Click"
+    id: key_6_click_state
+    
+  - platform: template
+    name: "Keypad 7 Held"
+    id: key_7_held_state
+  - platform: template
+    name: "Keypad 7 Double Click"
+    id: key_7_double_click_state
+  - platform: template
+    name: "Keypad 7 Click"
+    id: key_7_click_state
+    
+  - platform: template
+    name: "Keypad 8 Held"
+    id: key_8_held_state
+  - platform: template
+    name: "Keypad 8 Double Click"
+    id: key_8_double_click_state
+  - platform: template
+    name: "Keypad 8 Click"
+    id: key_8_click_state
+    
+  - platform: template
+    name: "Keypad 9 Held"
+    id: key_9_held_state
+  - platform: template
+    name: "Keypad 9 Double Click"
+    id: key_9_double_click_state
+  - platform: template
+    name: "Keypad 9 Click"
+    id: key_9_click_state
+    
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key1
+    key: 1
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_1_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_1_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 1 MultiHeld"
+          - lambda: !lambda |-
+              id(key_1_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_1_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 1 Double Click"
+        - lambda: !lambda |-
+              id(key_1_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_1_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key2
+    key: 2
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_4_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_4_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 4 MultiHeld"
+          - lambda: !lambda |-
+              id(key_4_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_4_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 4 Double Click"
+        - lambda: !lambda |-
+              id(key_4_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_4_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key3
+    key: 3
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_7_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_7_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 7 MultiHeld"
+          - lambda: !lambda |-
+              id(key_7_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_7_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 7 Double Click"
+        - lambda: !lambda |-
+              id(key_7_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_7_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key4
+    key: 4
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_2_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_2_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 2 MultiHeld"
+          - lambda: !lambda |-
+              id(key_2_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_2_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 2 Double Click"
+        - lambda: !lambda |-
+              id(key_2_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_2_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key5
+    key: 5
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_5_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_5_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 5 MultiHeld"
+          - lambda: !lambda |-
+              id(key_5_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_5_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 5 Double Click"
+        - lambda: !lambda |-
+              id(key_5_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_5_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key6
+    key: 6
+    on_multi_click:
+      - timing:
+        - ON for at most 960ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_8_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_8_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 8 MultiHeld"
+          - lambda: !lambda |-
+              id(key_8_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_8_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 8 Double Click"
+        - lambda: !lambda |-
+              id(key_8_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_8_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key7
+    key: 7
+    on_multi_click:
+      - timing:
+        - ON for at most 970ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_3_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_3_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 3 MultiHeld"
+          - lambda: !lambda |-
+              id(key_3_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_3_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 3 Double Click"
+        - lambda: !lambda |-
+              id(key_3_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_3_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key8
+    key: 8
+    on_multi_click:
+      - timing:
+        - ON for at most 980ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_6_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_6_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 6 MultiHeld"
+          - lambda: !lambda |-
+              id(key_6_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_6_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 6 Double Click"
+        - lambda: !lambda |-
+              id(key_6_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_6_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key9
+    key: 9
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_9_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_9_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 9 MultiHeld"
+          - lambda: !lambda |-
+              id(key_9_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_9_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 9 Double Click"
+        - lambda: !lambda |-
+              id(key_9_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_9_double_click_state).publish_state(false);

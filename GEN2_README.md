@@ -12,12 +12,13 @@ ESPDeck provides a macropad type input set to Home Assistant based on ESPHome. T
   * Double Click
   * Click and Hold
 
-See also the ![Novelkey Novelty Big Switch Macropad](/novelkey-big-switch/README.md) and the previous generation EspDecks ([Gen 1](GEN1_README.md), [Gen 2](GEN2_README.md)) in this repository.
+See also the ![Novelkey Novelty Big Switch Macropad](/novelkey-big-switch/README.md) and the [Gen 1 EspDeck](GEN1_README.md) is also documented.
 
 # Hardware Used
   * 1 x ESP8266 / NodeMCU
   * 9 x Relegendable KeyCaps (waterslide decal paper can also be used with existing keycaps, especially blank ones)
   * 9 x Mechanical key switches
+  * 1 x 10k Resistor
   * Hot Glue
   * 3d printer material
   * various wire
@@ -29,13 +30,16 @@ Case design based off of: https://www.thingiverse.com/thing:5204033. I extended 
 Case design can also be found here: https://www.thingiverse.com/thing:5223223
 
 # Wiring
-The wiring is simple enough, we make use of the matrix keypad feature and wire the columns and rows to inputs on the ESP. We avoid GPIO15 as it doesn't have an internal pullup as well, simplifying our wiring.
+The wiring is simple enough, one end of the switch going to the digitial IO pin, and the other end to ground, and set up ESPHome to have the internal pullup enabled on the ESP8266 device. Two of the GPIOs on the device cannot be done this way, GPIO16 needs an external pullup resistor, and GPIO15 needs to be inverted (internal pulldown, external pullup).
 
-![Third Generation Circuit Diagram](/assets/images/circuit-gen3.svg)
+![Second Generation Circuit Diagram](/assets/images/circuit-gen2-full.svg)
+
+
+![Second Generation Circuit Diagram Simplified](/assets/images/circuit-gen2-simplified.svg)
 
 # Configuration
 
-keypad3.yaml
+keypad2.yaml
 
 # Printing Instructions
 Print one each of:
@@ -47,6 +51,3 @@ These can be printed with low infill for speed.
 # Contributing
 Contributions are welcome to the project
 
-# Change Log
-
-  * With generation 3, we begin to use the Matrix Keypad feature of EspHome, simplifying the wiring.
