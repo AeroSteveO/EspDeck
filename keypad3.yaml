@@ -488,3 +488,5 @@ binary_sensor:
         - delay: 1s
         - lambda: !lambda |-
               id(key_9_double_click_state).publish_state(false);
+- platform: status
+    name: "Keypad Status"
