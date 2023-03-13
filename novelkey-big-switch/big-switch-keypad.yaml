@@ -85,5 +85,7 @@ binary_sensor:
         pullup: true
       inverted: true
     name: "Novelkey Switch 2"
-
+    
+- platform: status
+    name: "Keypad Status"
 
