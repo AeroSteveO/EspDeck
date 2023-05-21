@@ -58,6 +58,9 @@ esphome:
               id(key_8_double_click_state).publish_state(false);
       - lambda: !lambda |-
               id(key_9_double_click_state).publish_state(false);
+  project:
+    name: "EspDeck.v3"
+    version: "3.0.0"
 
 esp8266:
   board: esp01_1m
