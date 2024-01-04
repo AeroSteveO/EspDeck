@@ -16,7 +16,7 @@ ESPDeck provides a macropad type input set to Home Assistant based on ESPHome. T
 There are a number of variants of the device in this repository. The standard EspDeck is a 9 key pad. There is also the novelkey macropad, which has two BIG switches, and an upcoming design to add NFC functionality to the EspDeck macropad (NfcDeck). All of these use the same basic features in ESPHome and previous iterations of the designs are maintained for legacy support. Do look at the variant specific README files for the hardware needed, 3d print files, and yaml configurations.
 
 ## EspDeck
-[![EspDeck](/assets/images/espdeck.jpeg)](/espdeck/README.md)
+[![EspDeck](/assets/images/espdeck.jpg)](/espdeck/README.md)
 
 There are also previous generation EspDecks ([Gen 1](/espdeck/GEN1_README.md), [Gen 2](/espdeck/GEN2_README.md)) in this repository.
 
@@ -49,8 +49,7 @@ There are also previous generation EspDecks ([Gen 1](/espdeck/GEN1_README.md), [
 All the case designs can be found on Github, [Printables](https://www.printables.com/@AeroSteveO/collections/1135401), [Thingiverse](https://www.thingiverse.com/aerosteveo/collections/40893020/things), and [Youmagine](https://www.youmagine.com/aerosteve/collections/espdeck).
 
 # Configuration
-
-keypad3.yaml
+EspHome YAML files are included with each project and are versioned to allow for legacy device support.
 
 # Printing Instructions
 These can be printed with low infill for speed and with a medium to thick layer height, they don't need a fine layer height to print well. All the designs are intended to be printed without supports (except the main enclosure for the novelkey novelty macropad). 
