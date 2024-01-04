@@ -58,6 +58,9 @@ esphome:
               id(key_8_double_click_state).publish_state(false);
       - lambda: !lambda |-
               id(key_9_double_click_state).publish_state(false);
+  project:
+    name: "EspDeck.v2"
+    version: "2.0.0"
 
 esp8266:
   board: esp12e
@@ -517,3 +520,5 @@ binary_sensor:
         - delay: 1s
         - lambda: !lambda |-
               id(key_9_double_click_state).publish_state(false);
+- platform: status
+    name: "Keypad Status"
