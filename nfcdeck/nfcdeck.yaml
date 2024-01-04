@@ -1,0 +1,811 @@
+esphome:
+  name: esphome-web-6edcc8
+  friendly_name: nfcdeck
+  project:
+    name: aerosteveo.nfc_deck
+    version: "1.0"
+  # If buzzer is enabled, notify on api connection success
+  on_boot:
+    priority: -10
+    then:
+    - lambda: !lambda |-
+            id(key_1_click_state).publish_state(false);
+            id(key_2_click_state).publish_state(false);
+            id(key_3_click_state).publish_state(false);
+            id(key_4_click_state).publish_state(false);
+            id(key_5_click_state).publish_state(false);
+            id(key_6_click_state).publish_state(false);
+            id(key_7_click_state).publish_state(false);
+            id(key_8_click_state).publish_state(false);
+            id(key_9_click_state).publish_state(false);
+            id(key_1_held_state).publish_state(false);
+            id(key_2_held_state).publish_state(false);
+            id(key_3_held_state).publish_state(false);
+            id(key_4_held_state).publish_state(false);
+            id(key_5_held_state).publish_state(false);
+            id(key_6_held_state).publish_state(false);
+            id(key_7_held_state).publish_state(false);
+            id(key_8_held_state).publish_state(false);
+            id(key_9_held_state).publish_state(false);
+            id(key_1_double_click_state).publish_state(false);
+            id(key_2_double_click_state).publish_state(false);
+            id(key_3_double_click_state).publish_state(false);
+            id(key_4_double_click_state).publish_state(false);
+            id(key_5_double_click_state).publish_state(false);
+            id(key_6_double_click_state).publish_state(false);
+            id(key_7_double_click_state).publish_state(false);
+            id(key_8_double_click_state).publish_state(false);
+            id(key_9_double_click_state).publish_state(false);
+    - wait_until:
+        api.connected:
+    - logger.log: API is connected!
+    - rtttl.play: "success:d=24,o=5,b=100:c,g,b"
+    - light.turn_on:
+        id: activity_led
+        brightness: 100%
+        red: 0%
+        green: 0%
+        blue: 100%
+        flash_length: 500ms
+    - switch.turn_on: buzzer_enabled
+    - switch.turn_on: led_enabled
+
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+#logger:
+  #logs:
+    #component: ERROR
+  # level: VERY_VERBOSE
+  # level: VERBOSE
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "5yLx/vJwT9iOyfF9Gx2uL91uIAn/obBNU1Zf4NmUwaE="
+  services:
+  - service: rfidreader_tag_ok
+    then:
+    - rtttl.play: "beep:d=16,o=5,b=100:b"
+  - service: rfidreader_tag_ko
+    then:
+    - rtttl.play: "beep:d=8,o=5,b=100:b"
+
+  - service: play_rtttl
+    variables:
+      song_str: string
+    then:
+    - rtttl.play: !lambda 'return song_str;'
+
+  - service: write_tag_id
+    variables:
+      tag_id: string
+    then:
+    - light.turn_on:
+        id: activity_led
+        brightness: 100%
+        red: 100%
+        green: 0%
+        blue: 0%    
+    - lambda: |-
+        auto message = new nfc::NdefMessage();
+        std::string uri = "https://www.home-assistant.io/tag/";
+        uri += tag_id;
+        message->add_uri_record(uri);
+        id(pn532_board).write_mode(message);
+    - rtttl.play: "write:d=24,o=5,b=100:b"
+    - wait_until:
+        not:
+          pn532.is_writing:
+    - light.turn_off:
+        id: activity_led
+    - rtttl.play: "write:d=24,o=5,b=100:b,b"
+
+  - service: write_music_tag
+    variables:
+      music_url: string
+      music_info: string
+    then:
+    - light.turn_on:
+        id: activity_led
+        brightness: 100%
+        red: 100%
+        green: 0%
+        blue: 0%    
+    - lambda: |-
+        auto message = new nfc::NdefMessage();
+        std::string uri = "";
+        std::string text = "";
+        uri += music_url;
+        text += music_info;
+        if ( music_url != "" ) {
+          message->add_uri_record(uri);
+        }
+        if ( music_info != "" ) {
+          message->add_text_record(text);
+        }
+        id(pn532_board).write_mode(message);
+    - rtttl.play: "write:d=24,o=5,b=100:b"
+    - wait_until:
+        not:
+          pn532.is_writing:
+    - light.turn_off:
+        id: activity_led
+    - rtttl.play: "write:d=24,o=5,b=100:b,b"
+
+ota:
+
+substitutions:
+  name: esphome-web-asddf
+  friendly_name: NfcDeck
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esphome-Web-asdf"
+    password: "asdfasdfasdfasdfasdf"
+
+captive_portal:
+    
+matrix_keypad:
+  id: espdeck_keypad
+  rows:
+    - pin: 1
+    - pin: 3
+    - pin: 2
+  columns:
+    - pin: 13
+    - pin: 12
+    - pin: 14
+  keys: "123456789"
+  has_diodes: false
+
+# Define switches to control LED and buzzer from HA
+switch:
+- platform: template
+  name: "${friendly_name} Buzzer Enabled"
+  id: buzzer_enabled
+  icon: mdi:volume-high
+  optimistic: true
+  restore_mode: RESTORE_DEFAULT_ON
+  entity_category: config
+- platform: template
+  name: "${friendly_name} LED enabled"
+  id: led_enabled
+  icon: mdi:alarm-light-outline
+  optimistic: true
+  restore_mode: RESTORE_DEFAULT_ON
+  entity_category: config
+  
+# Define buttons for writing tags via HA 
+button:
+  - platform: template
+    name: Write Tag Random
+    id: write_tag_random
+    # Optional variables:
+    icon: "mdi:pencil-box"
+    on_press:
+      then:
+      - light.turn_on:
+          id: activity_led
+          brightness: 100%
+          red: 100%
+          green: 0%
+          blue: 100%    
+      - lambda: |-
+          static const char alphanum[] = "0123456789abcdef";
+          std::string uri = "https://www.home-assistant.io/tag/";
+          for (int i = 0; i < 8; i++)
+            uri += alphanum[random_uint32() % (sizeof(alphanum) - 1)];
+          uri += "-";
+          for (int j = 0; j < 3; j++) {
+            for (int i = 0; i < 4; i++)
+              uri += alphanum[random_uint32() % (sizeof(alphanum) - 1)];
+            uri += "-";
+          }
+          for (int i = 0; i < 12; i++)
+            uri += alphanum[random_uint32() % (sizeof(alphanum) - 1)];
+          auto message = new nfc::NdefMessage();
+          message->add_uri_record(uri);
+          ESP_LOGD("tagreader", "Writing payload: %s", uri.c_str());
+          id(pn532_board).write_mode(message);
+      - rtttl.play: "write:d=24,o=5,b=100:b"
+      - wait_until:
+          not:
+            pn532.is_writing:
+      - light.turn_off:
+          id: activity_led
+      - rtttl.play: "write:d=24,o=5,b=100:b,b"
+  - platform: template
+    name: Clean Tag
+    id: clean_tag
+    icon: "mdi:nfc-variant-off"
+    on_press:
+      then:
+      - light.turn_on:
+          id: activity_led
+          brightness: 100%
+          red: 100%
+          green: 64.7%
+          blue: 0%    
+      - lambda: 'id(pn532_board).clean_mode();'
+      - rtttl.play: "write:d=24,o=5,b=100:b"
+      - wait_until:
+          not:
+            pn532.is_writing:
+      - light.turn_off:
+          id: activity_led
+      - rtttl.play: "write:d=24,o=5,b=100:b,b"
+  - platform: template
+    name: Cancel writing 
+    id: cancel_writing
+    icon: "mdi:pencil-off"
+    on_press:
+      then:
+      - lambda: 'id(pn532_board).read_mode();'
+      - light.turn_off:
+          id: activity_led
+      - rtttl.play: "write:d=24,o=5,b=100:b,b"
+
+  - platform: restart
+    name: "${friendly_name} Restart"
+    entity_category: config
+
+i2c:
+  scan: False
+  frequency: 400kHz
+  sda: 04
+  scl: 05
+
+globals:
+  - id: source
+    type: std::string
+  - id: url
+    type: std::string
+  - id: info
+    type: std::string
+
+pn532_i2c:
+  id: pn532_board
+  on_tag:
+    then:
+    - if:
+        condition:
+          switch.is_on: led_enabled
+        then:
+        - light.turn_on:
+            id: activity_led
+            brightness: 100%
+            red: 0%
+            green: 100%
+            blue: 0%
+            flash_length: 500ms
+    
+    - delay: 0.15s #to fix slow component
+        
+    - lambda: |-
+        id(source)="";
+        id(url)="";
+        id(info)="";
+        if (tag.has_ndef_message()) {
+          auto message = tag.get_ndef_message();
+          auto records = message->get_records();
+          for (auto &record : records) {
+            std::string payload = record->get_payload();
+            std::string type = record->get_type();
+            size_t hass = payload.find("https://www.home-assistant.io/tag/");
+            size_t applemusic = payload.find("https://music.apple.com");
+            size_t spotify = payload.find("https://open.spotify.com");
+            size_t sonos = payload.find("sonos-2://");
+
+            if (type == "U" and hass != std::string::npos ) {
+              ESP_LOGD("tagreader", "Found Home Assistant tag NDEF");
+              id(source)="hass";
+              id(url)=payload;
+              id(info)=payload.substr(hass + 34);
+            }
+            else if (type == "U" and applemusic != std::string::npos ) {
+              ESP_LOGD("tagreader", "Found Apple Music tag NDEF");
+              id(source)="amusic";
+              id(url)=payload;
+            }
+            else if (type == "U" and spotify != std::string::npos ) {
+              ESP_LOGD("tagreader", "Found Spotify tag NDEF");
+              id(source)="spotify";
+              id(url)=payload;
+            }
+            else if (type == "U" and sonos != std::string::npos ) {
+              ESP_LOGD("tagreader", "Found Sonos app tag NDEF");
+              id(source)="sonos";
+              id(url)=payload;
+            }
+            else if (type == "T" ) {
+              ESP_LOGD("tagreader", "Found music info tag NDEF");
+              id(info)=payload;
+            }
+            else if ( id(source)=="" ) {
+              id(source)="uid";
+            }
+          }
+        }
+        else {
+          id(source)="uid";
+        }
+    
+    - if:
+        condition:
+          lambda: 'return ( id(source)=="uid" );'
+        then:
+          - homeassistant.tag_scanned: !lambda |-
+              ESP_LOGD("tagreader", "No HA NDEF, using UID");
+              return x;
+        else:
+        - if:
+            condition:
+              lambda: 'return ( id(source)=="hass" );'
+            then:
+            - homeassistant.tag_scanned: !lambda 'return id(info);'
+            else:
+            - homeassistant.event:
+                event: esphome.music_tag
+                data:
+                  reader: !lambda |-
+                    return App.get_name().c_str();
+                  source: !lambda |-
+                    return id(source);
+                  url: !lambda |-
+                    return id(url);
+                  info: !lambda |-
+                    return id(info);
+    
+    - if:
+        condition:
+          switch.is_on: buzzer_enabled
+        then:
+        - rtttl.play: "success:d=24,o=5,b=100:c,g,b"
+  on_tag_removed:
+    then:
+    - homeassistant.event:
+        event: esphome.tag_removed
+
+# Define the buzzer output
+output:
+- platform: esp8266_pwm
+  pin: 15
+  id: buzzer
+
+text_sensor:
+  - platform: version
+    hide_timestamp: true
+    name: "${friendly_name} ESPHome Version"
+    entity_category: diagnostic
+  - platform: wifi_info
+    ip_address:
+      name: "${friendly_name} IP Address"
+      icon: mdi:wifi
+      entity_category: diagnostic
+    ssid:
+      name: "${friendly_name} Connected SSID"
+      icon: mdi:wifi-strength-2
+      entity_category: diagnostic
+
+# Define buzzer as output for RTTTL
+rtttl:
+  output: buzzer
+
+# # Example configuration entry
+# sensor:
+#   - platform: rotary_encoder
+#     name: "Rotary Encoder"
+#     pin_a: 9
+#     pin_b: 10
+
+# Configure LED
+light:
+- platform: neopixelbus
+  variant: WS2812
+  pin: 0
+  num_leds: 1
+  flash_transition_length: 500ms
+  type: GRB
+  id: activity_led
+  name: "${friendly_name} LED"
+  restore_mode: ALWAYS_OFF
+
+binary_sensor:
+  - platform: status
+    name: "${friendly_name} Status"
+    entity_category: diagnostic
+    
+  - platform: template
+    name: "Keypad 1 Held"
+    id: key_1_held_state
+  - platform: template
+    name: "Keypad 1 Double Click"
+    id: key_1_double_click_state
+  - platform: template
+    name: "Keypad 1 Click"
+    id: key_1_click_state
+
+  - platform: template
+    name: "Keypad 2 Held"
+    id: key_2_held_state
+  - platform: template
+    name: "Keypad 2 Double Click"
+    id: key_2_double_click_state
+  - platform: template
+    name: "Keypad 2 Click"
+    id: key_2_click_state
+    
+  - platform: template
+    name: "Keypad 3 Held"
+    id: key_3_held_state
+  - platform: template
+    name: "Keypad 3 Double Click"
+    id: key_3_double_click_state
+  - platform: template
+    name: "Keypad 3 Click"
+    id: key_3_click_state
+    
+  - platform: template
+    name: "Keypad 4 Held"
+    id: key_4_held_state
+  - platform: template
+    name: "Keypad 4 Double Click"
+    id: key_4_double_click_state
+  - platform: template
+    name: "Keypad 4 Click"
+    id: key_4_click_state
+    
+  - platform: template
+    name: "Keypad 5 Held"
+    id: key_5_held_state
+  - platform: template
+    name: "Keypad 5 Double Click"
+    id: key_5_double_click_state
+  - platform: template
+    name: "Keypad 5 Click"
+    id: key_5_click_state
+    
+  - platform: template
+    name: "Keypad 6 Held"
+    id: key_6_held_state
+  - platform: template
+    name: "Keypad 6 Double Click"
+    id: key_6_double_click_state
+  - platform: template
+    name: "Keypad 6 Click"
+    id: key_6_click_state
+    
+  - platform: template
+    name: "Keypad 7 Held"
+    id: key_7_held_state
+  - platform: template
+    name: "Keypad 7 Double Click"
+    id: key_7_double_click_state
+  - platform: template
+    name: "Keypad 7 Click"
+    id: key_7_click_state
+    
+  - platform: template
+    name: "Keypad 8 Held"
+    id: key_8_held_state
+  - platform: template
+    name: "Keypad 8 Double Click"
+    id: key_8_double_click_state
+  - platform: template
+    name: "Keypad 8 Click"
+    id: key_8_click_state
+    
+  - platform: template
+    name: "Keypad 9 Held"
+    id: key_9_held_state
+  - platform: template
+    name: "Keypad 9 Double Click"
+    id: key_9_double_click_state
+  - platform: template
+    name: "Keypad 9 Click"
+    id: key_9_click_state
+    
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key1
+    key: 1
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_1_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_1_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 1 MultiHeld"
+          - lambda: !lambda |-
+              id(key_1_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_1_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 1 Double Click"
+        - lambda: !lambda |-
+              id(key_1_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_1_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key2
+    key: 2
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_4_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_4_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 4 MultiHeld"
+          - lambda: !lambda |-
+              id(key_4_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_4_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 4 Double Click"
+        - lambda: !lambda |-
+              id(key_4_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_4_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key3
+    key: 3
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_7_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_7_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 7 MultiHeld"
+          - lambda: !lambda |-
+              id(key_7_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_7_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 7 Double Click"
+        - lambda: !lambda |-
+              id(key_7_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_7_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key4
+    key: 4
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_2_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_2_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 2 MultiHeld"
+          - lambda: !lambda |-
+              id(key_2_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_2_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 2 Double Click"
+        - lambda: !lambda |-
+              id(key_2_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_2_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key5
+    key: 5
+    on_multi_click:
+      - timing:
+        - ON for at most 950ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_5_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_5_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 5 MultiHeld"
+          - lambda: !lambda |-
+              id(key_5_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_5_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 5 Double Click"
+        - lambda: !lambda |-
+              id(key_5_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_5_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key6
+    key: 6
+    on_multi_click:
+      - timing:
+        - ON for at most 960ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_8_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_8_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 8 MultiHeld"
+          - lambda: !lambda |-
+              id(key_8_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_8_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 8 Double Click"
+        - lambda: !lambda |-
+              id(key_8_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_8_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key7
+    key: 7
+    on_multi_click:
+      - timing:
+        - ON for at most 970ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_3_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_3_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 3 MultiHeld"
+          - lambda: !lambda |-
+              id(key_3_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_3_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 3 Double Click"
+        - lambda: !lambda |-
+              id(key_3_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_3_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key8
+    key: 8
+    on_multi_click:
+      - timing:
+        - ON for at most 980ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_6_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_6_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 6 MultiHeld"
+          - lambda: !lambda |-
+              id(key_6_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_6_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 6 Double Click"
+        - lambda: !lambda |-
+              id(key_6_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_6_double_click_state).publish_state(false);
+  - platform: matrix_keypad
+    keypad_id: espdeck_keypad
+    id: key9
+    key: 9
+    on_multi_click:
+      - timing:
+        - ON for at most 990ms
+        - OFF for at least 500ms
+        then:
+          - lambda: !lambda |-
+              id(key_9_click_state).publish_state(true);
+          - delay: 500ms
+          - lambda: !lambda |-
+              id(key_9_click_state).publish_state(false);
+      - timing:
+        - ON for at least 1s
+        then:
+          - logger.log: "Key 9 MultiHeld"
+          - lambda: !lambda |-
+              id(key_9_held_state).publish_state(true);
+          - delay: 1s
+          - lambda: !lambda |-
+              id(key_9_held_state).publish_state(false);
+    on_double_click:
+      min_length: 25ms
+      max_length: 350ms
+      then:
+        - logger.log: "Key 9 Double Click"
+        - lambda: !lambda |-
+              id(key_9_double_click_state).publish_state(true);
+        - delay: 1s
+        - lambda: !lambda |-
+              id(key_9_double_click_state).publish_state(false);

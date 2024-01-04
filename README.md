@@ -12,7 +12,30 @@ ESPDeck provides a macropad type input set to Home Assistant based on ESPHome. T
   * Double Click
   * Click and Hold
 
-See also the ![Novelkey Novelty Big Switch Macropad](/novelkey-big-switch/README.md) and the previous generation EspDecks ([Gen 1](GEN1_README.md), [Gen 2](GEN2_README.md)) in this repository.
+# Variants
+There are a number of variants of the device in this repository. The standard EspDeck is a 9 key pad. There is also the novelkey macropad, which has two BIG switches, and an upcoming design to add NFC functionality to the EspDeck macropad (NfcDeck). All of these use the same basic features in ESPHome and previous iterations of the designs are maintained for legacy support. Do look at the variant specific README files for the hardware needed, 3d print files, and yaml configurations.
+
+## EspDeck
+[![EspDeck](/assets/images/espdeck.jpeg)](/espdeck/README.md)
+
+There are also previous generation EspDecks ([Gen 1](/espdeck/GEN1_README.md), [Gen 2](/espdeck/GEN2_README.md)) in this repository.
+
+## NfcDeck (coming soon)
+
+
+### Additional Functionality
+
+  * NFC Card Reader
+  * Rotary Encoder
+  * Per Key Addressable Backlighting
+
+## Novelkey Novelty macropad
+[![Novelkey Novelty Big Switch Macropad](/assets/images/novelkey.jpeg)](/novelkey-big-switch/README.md)
+
+### Additional Functionality
+
+  * Per Key LED Backlighting
+  * BIG switches
 
 # Hardware Used
   * 1 x ESP8266 / NodeMCU
@@ -22,27 +45,15 @@ See also the ![Novelkey Novelty Big Switch Macropad](/novelkey-big-switch/README
   * 3d printer material
   * various wire
 
-# Case
-
-Case design based off of: https://www.thingiverse.com/thing:5204033. I extended the height of the case for my inefficient use of space inside of it, I also made some modifications to better hold the Esp8266. The top of the case is currently press fit or hot glued on, though I'll be working on making it a screw in place top in the future.
-
-Case design can also be found here: https://www.thingiverse.com/thing:5223223
-
-# Wiring
-The wiring is simple enough, we make use of the matrix keypad feature and wire the columns and rows to inputs on the ESP. We avoid GPIO15 as it doesn't have an internal pullup as well, simplifying our wiring.
-
-![Third Generation Circuit Diagram](/assets/images/circuit-gen3.svg)
+# STL Files for 3D Printing
+All the case designs can be found on Github, [Printables](https://www.printables.com/@AeroSteveO/collections/1135401), [Thingiverse](https://www.thingiverse.com/aerosteveo/collections/40893020/things), and [Youmagine](https://www.youmagine.com/aerosteve/collections/espdeck).
 
 # Configuration
 
 keypad3.yaml
 
 # Printing Instructions
-Print one each of:
-  * MacroPadBottomExtended.stl
-  * MacroPadTop.stl
-
-These can be printed with low infill for speed.
+These can be printed with low infill for speed and with a medium to thick layer height, they don't need a fine layer height to print well. All the designs are intended to be printed without supports (except the main enclosure for the novelkey novelty macropad). 
 
 # Contributing
 Contributions are welcome to the project
@@ -50,3 +61,4 @@ Contributions are welcome to the project
 # Change Log
 
   * With generation 3, we begin to use the Matrix Keypad feature of EspHome, simplifying the wiring.
+  * With generation 4, we'll be adding WS2812 LEDs to backlight the key switches, providing an aveneue for notifying of a status from home assistant
