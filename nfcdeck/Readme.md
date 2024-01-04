@@ -11,7 +11,7 @@ This is a complex iteration of the EspDeck in order to allow control of multi ro
   * 4 x [Rubber Feet](https://www.amazon.com/dp/B06XPCLN23)
 
 # Circuit Diagram
-![First Generation Circuit Diagram](/assets/nfcdeck_circuit.svg)
+![First Generation Circuit Diagram](/nfcdeck/assets/nfcdeck_circuit.svg)
 
 # Wiring
 
