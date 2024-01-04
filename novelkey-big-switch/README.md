@@ -1,26 +1,23 @@
-# NFC Deck
-This is a complex iteration of the EspDeck in order to allow control of multi room audio systems (or anything else you want to use it for). There are two top panel iterations, one for 9 mechanical key switches, and one for 8 key switches and one rotary encoder.
+# Novelkey "The Big Switch" ESP Home MacroPad
+This is a simple 2 switch ESP Home based macropad for use with home assistant. I built these for nightstand switches for the lights and overhead fan in the room (or as an excuse to play with the novelkeys big switches). They have RGB backlighting to provide feedback of what functionality is on what key (or whatever else you want to use the lighting for).
 
 # Components:
   * ESP8266 / NodeMCU
-  * 8  x Mechanical Key Switches
-  * 1  x Rotary Encoder
-  * 1  x NFC Card Reader
-  * 10 x WS2812 LEDs
-  * 1  x Piezo Buzzer
+  * 2 x [NovelKey "The Big Switch" mechanical keyboard switches](https://novelkeys.com/products/the-big-switch-series)
+  * 2 x [Common Cathode RGB LEDs](https://www.amazon.com/dp/B0749MD16P)
+  * 2 x [300 ohm resistors](https://www.amazon.com/dp/B07HDH7QK5)
+  * 3 x [pairs of 3-pin JST plugs](https://www.amazon.com/gp/product/B071H5XCN5) (I got them originally for WLED strips)
   * 4 x [Rubber Feet](https://www.amazon.com/dp/B06XPCLN23)
 
 # Circuit Diagram
-![First Generation Circuit Diagram](/assets/nfcdeck_circuit.svg)
+![First Generation Circuit Diagram](/novelkey-big-switch/assets/novelkey2.png)
 
-# Wiring
-
-# Assembly
 
 # Printing Instructions
 Print one each of:
 
- *  base.stl
- *  top.stl
+ *  big_base.stl
+ *  big_bottom.stl
+ *  big_cover.stl
 
 These can be low infill as they don't require much structural stability
