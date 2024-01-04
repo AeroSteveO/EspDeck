@@ -31,7 +31,7 @@ Case design can also be found here: https://www.thingiverse.com/thing:5223223
 # Wiring
 The wiring is simple enough, we make use of the matrix keypad feature and wire the columns and rows to inputs on the ESP. We avoid GPIO15 as it doesn't have an internal pullup as well, simplifying our wiring.
 
-![Third Generation Circuit Diagram](/assets/images/circuit-gen3.svg)
+![Third Generation Circuit Diagram](/espdeck/assets/images/circuit-gen3.svg)
 
 # Configuration
 
