@@ -1,6 +1,6 @@
 esphome:
-  name: esphome-web-6edcc8
-  friendly_name: nfcdeck
+  name: esphome-web-75e790
+  friendly_name: nfcdeck-n1
   project:
     name: aerosteveo.nfc_deck
     version: "1.0"
@@ -50,21 +50,34 @@ esphome:
     - switch.turn_on: buzzer_enabled
     - switch.turn_on: led_enabled
 
+substitutions:
+  name: esphome-web-asdf
+  friendly_name: NfcDeck
+  nine_key_pin_1: "13"
+  nine_key_pin_2: "12"
+  nine_key_pin_3: "14"
+  nine_key_pin_4: "27"
+  nine_key_pin_5: "26"
+  nine_key_pin_6: "25"
+  i2c_sda_pin: "23"
+  i2c_scl_pin: "22"
+  buzzer_output_pin: "1"
+  rotary_pin_a: "3"
+  rotary_pin_b: "21"
+  neopixelbus_pin: "19"
 
-esp8266:
-  board: esp01_1m
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
 
 # Enable logging
-#logger:
-  #logs:
-    #component: ERROR
-  # level: VERY_VERBOSE
-  # level: VERBOSE
+logger:
 
 # Enable Home Assistant API
 api:
   encryption:
-    key: "5yLx/vJwT9iOyfF9Gx2uL91uIAn/obBNU1Zf4NmUwaE="
+    key: "asdfasdfasdfasdfasdfasdf"
   services:
   - service: rfidreader_tag_ok
     then:
@@ -137,10 +150,6 @@ api:
 
 ota:
 
-substitutions:
-  name: esphome-web-asddf
-  friendly_name: NfcDeck
-
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
@@ -151,17 +160,18 @@ wifi:
     password: "asdfasdfasdfasdfasdf"
 
 captive_portal:
-    
+
+
 matrix_keypad:
   id: espdeck_keypad
   rows:
-    - pin: 1
-    - pin: 3
-    - pin: 2
+    - pin: $nine_key_pin_4
+    - pin: $nine_key_pin_5
+    - pin: $nine_key_pin_6
   columns:
-    - pin: 13
-    - pin: 12
-    - pin: 14
+    - pin: $nine_key_pin_1
+    - pin: $nine_key_pin_2
+    - pin: $nine_key_pin_3
   keys: "123456789"
   has_diodes: false
 
@@ -259,8 +269,8 @@ button:
 i2c:
   scan: False
   frequency: 400kHz
-  sda: 04
-  scl: 05
+  sda: $i2c_sda_pin
+  scl: $i2c_scl_pin
 
 globals:
   - id: source
@@ -375,8 +385,8 @@ pn532_i2c:
 
 # Define the buzzer output
 output:
-- platform: esp8266_pwm
-  pin: 15
+- platform: ledc
+  pin: $buzzer_output_pin
   id: buzzer
 
 text_sensor:
@@ -399,23 +409,108 @@ rtttl:
   output: buzzer
 
 # # Example configuration entry
-# sensor:
-#   - platform: rotary_encoder
-#     name: "Rotary Encoder"
-#     pin_a: 9
-#     pin_b: 10
+sensor:
+  - platform: rotary_encoder
+    name: "Rotary Encoder"
+    pin_a: $rotary_pin_a
+    pin_b: $rotary_pin_b
 
 # Configure LED
 light:
-- platform: neopixelbus
-  variant: WS2812
-  pin: 0
-  num_leds: 1
-  flash_transition_length: 500ms
-  type: GRB
-  id: activity_led
-  name: "${friendly_name} LED"
-  restore_mode: ALWAYS_OFF
+  - platform: neopixelbus
+    variant: WS2812
+    pin: $neopixelbus_pin
+    num_leds: 8
+    flash_transition_length: 500ms
+    type: GRB
+    id: light_strip
+    name: "${friendly_name} LED"
+    restore_mode: ALWAYS_OFF
+    effects:
+      - addressable_lambda:
+          name: "My Custom Effect"
+          update_interval: 16ms
+          lambda: |-
+            for (int i = it.size() - 1; i > 0; i--) {
+              it[i] = it[i - 1].get();
+            }
+            it[0] = Color::random_color();
+            it.range(0, 8) = Color::BLACK;
+            it.all().fade_to_black(10);
+      - addressable_lambda:
+          name: "Wipe In"
+          update_interval: 12ms
+          lambda: |-
+            static int x = 0;
+            if (initial_run) {
+              x = 0;
+              it.all() = ESPColor::BLACK;
+            }
+            if (x < it.size()) {
+              it[x] = current_color;
+              x += 1;
+            }
+      - addressable_lambda:
+          name: "Wipe Out"
+          update_interval: 12ms
+          lambda: |-
+            static int x = 0;
+            if (initial_run) {
+              x = it.size();
+            }
+            if (x > 0) {
+              x -= 1;
+              it[x] = ESPColor::BLACK;
+            }
+  - platform: partition
+    name: "Key 1 Light"
+    id: activity_led
+    segments:
+      - id: light_strip
+        from: 0
+        to: 0
+  - platform: partition
+    name: "Key 2 Light"
+    segments:
+      - id: light_strip
+        from: 1
+        to: 1
+  - platform: partition
+    name: "Key 3 Light"
+    segments:
+      - id: light_strip
+        from: 2
+        to: 2
+  - platform: partition
+    name: "Key 4 Light"
+    segments:
+      - id: light_strip
+        from: 3
+        to: 3
+  - platform: partition
+    name: "Key 5 Light"
+    segments:
+      - id: light_strip
+        from: 4
+        to: 4
+  - platform: partition
+    name: "Key 6 Light"
+    segments:
+      - id: light_strip
+        from: 5
+        to: 5
+  - platform: partition
+    name: "Key 7 Light"
+    segments:
+      - id: light_strip
+        from: 6
+        to: 6
+  - platform: partition
+    name: "Key 8 Light"
+    segments:
+      - id: light_strip
+        from: 7
+        to: 7
 
 binary_sensor:
   - platform: status
