@@ -16,7 +16,7 @@ Since this has a few different variants you can build. We split the parts list u
   * 1 x Piezo Buzzer
   * 4 x [Rubber Feet](https://www.amazon.com/dp/B06XPCLN23)
 
-## 9 Key rotary
+## 9 Key + Rotary
   * 8  x Mechanical Key Switches
   * 8  x Relegendable Key Caps
   * 1  x Rotary Encoder
@@ -30,7 +30,7 @@ Since this has a few different variants you can build. We split the parts list u
   * 9  x Relegendable Key Caps
   * 9 x WS2812 LEDs
 
-## 3 Key Rotary
+## 3 Key + Rotary
   * 2  x Mechanical Key Switches
   * 2  x Relegendable Key Caps
   * 1  x Rotary Encoder
@@ -48,6 +48,7 @@ Since this has a few different variants you can build. We split the parts list u
 ![First Generation Circuit Diagram](/nfcdeck/assets/nfcdeck_circuit.svg)
 
 # Wiring
+- Assemble a small circuit board with the rotary encoder 
 
 # Assembly
 

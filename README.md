@@ -21,7 +21,7 @@ There are a number of variants of the device in this repository. The standard Es
 There are also previous generation EspDecks ([Gen 1](/espdeck/GEN1_README.md), [Gen 2](/espdeck/GEN2_README.md)) in this repository.
 
 ## NfcDeck (coming soon)
-
+[![NfcDeck](/assets/images/nfcdeck.jpg)](/nfcdeck/README.md)
 
 ### Additional Functionality
 
