@@ -1,5 +1,5 @@
 esphome:
-  name: esphome-web-75e790
+  name: esphome-web-asdf
   friendly_name: nfcdeck-n1
   project:
     name: aerosteveo.nfc_deck
@@ -412,8 +412,26 @@ rtttl:
 sensor:
   - platform: rotary_encoder
     name: "Rotary Encoder"
-    pin_a: $rotary_pin_a
-    pin_b: $rotary_pin_b
+    pin_a:
+      number: $rotary_pin_a
+      mode:
+        input: true
+        pullup: true
+    pin_b:
+      number: $rotary_pin_b
+      mode:
+        pullup: true
+        input: true
+    publish_initial_value: true
+    filters:
+      - debounce: 0.1s
+      # - exponential_moving_average:
+      #     alpha: 0.05
+      #     send_every: 3
+          
+      # - sliding_window_moving_average:
+      #     window_size: 5
+      #     send_every: 2
 
 # Configure LED
 light:
@@ -449,6 +467,7 @@ light:
             if (x < it.size()) {
               it[x] = current_color;
               x += 1;
+              delay(500);
             }
       - addressable_lambda:
           name: "Wipe Out"
@@ -463,7 +482,7 @@ light:
               it[x] = ESPColor::BLACK;
             }
   - platform: partition
-    name: "Key 1 Light"
+    name: "Key 3 Light"
     id: activity_led
     segments:
       - id: light_strip
@@ -476,7 +495,7 @@ light:
         from: 1
         to: 1
   - platform: partition
-    name: "Key 3 Light"
+    name: "Key 1 Light"
     segments:
       - id: light_strip
         from: 2
@@ -500,13 +519,13 @@ light:
         from: 5
         to: 5
   - platform: partition
-    name: "Key 7 Light"
+    name: "Key 8 Light"
     segments:
       - id: light_strip
         from: 6
         to: 6
   - platform: partition
-    name: "Key 8 Light"
+    name: "Key 7 Light"
     segments:
       - id: light_strip
         from: 7
