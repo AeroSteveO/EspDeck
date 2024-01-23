@@ -66,7 +66,7 @@ esp8266:
   board: esp12e
 
 dashboard_import:
-  package_import_url: github://AeroSteveO/EspDeck/edit/main/keypad.yaml
+  package_import_url: github://AeroSteveO/EspDeck/espdeck/keypad.yaml
 
 # Enable logging
 logger:

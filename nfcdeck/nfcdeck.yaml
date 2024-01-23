@@ -71,6 +71,10 @@ esp32:
   framework:
     type: arduino
 
+# This should point to the public location of this yaml file.
+dashboard_import:
+  package_import_url: github://AeroSteveO/EspDeck/nfcdeck/nfcdeck.yaml
+
 # Enable logging
 logger:
 

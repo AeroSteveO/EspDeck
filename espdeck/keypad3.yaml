@@ -75,7 +75,7 @@ ota:
 
 # This should point to the public location of this yaml file.
 dashboard_import:
-  package_import_url: github://AeroSteveO/EspDeck/edit/main/keypad3.yaml
+  package_import_url: github://AeroSteveO/EspDeck/espdeck/keypad3.yaml
 
 
 wifi:

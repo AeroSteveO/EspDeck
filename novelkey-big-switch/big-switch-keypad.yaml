@@ -18,7 +18,7 @@ ota:
   password: ""
 
 dashboard_import:
-  package_import_url: github://AeroSteveO/EspDeck/main/novelkey-big-switch/big-switch-keypad.yaml
+  package_import_url: github://AeroSteveO/EspDeck/novelkey-big-switch/big-switch-keypad.yaml
 
 wifi:
   ssid: !secret wifi_ssid
