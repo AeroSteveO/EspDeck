@@ -46,7 +46,7 @@ There are also previous generation EspDecks ([Gen 1](/espdeck/GEN1_README.md), [
   * various wire
 
 # STL Files for 3D Printing
-All the case designs can be found on Github, [Printables](https://www.printables.com/@AeroSteveO/collections/1135401), [Thingiverse](https://www.thingiverse.com/aerosteveo/collections/40893020/things), and [Youmagine](https://www.youmagine.com/aerosteve/collections/espdeck).
+All the case designs can be found on Github, [Printables](https://www.printables.com/@AeroSteveO/collections/1135401), and [Thingiverse](https://www.thingiverse.com/aerosteveo/collections/40893020/things)
 
 # Configuration
 EspHome YAML files are included with each project and are versioned to allow for legacy device support.
