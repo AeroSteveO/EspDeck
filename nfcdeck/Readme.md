@@ -15,37 +15,53 @@ Since this has a few different variants you can build. We split the parts list u
   * 1 x NFC Card Reader
   * 1 x Piezo Buzzer
   * 4 x [Rubber Feet](https://www.amazon.com/dp/B06XPCLN23)
+  * 4 x M2 heat set inserts
+  * 4 x M2 screws
 
 ## 9 Key + Rotary
   * 8  x Mechanical Key Switches
   * 8  x Relegendable Key Caps
   * 1  x Rotary Encoder
   * 1  x Knob
-  * 8  x WS2812 LEDs
+  * 8  x WS2812 LEDs (60 LED per M, or 16.5mm interval)
   * 2  x 100 ohm resistors
   * 2  x 1 uf capcitors
 
 ## 9 Key
   * 9  x Mechanical Key Switches
   * 9  x Relegendable Key Caps
-  * 9 x WS2812 LEDs
+  * 9  x WS2812 LEDs (60 LED per M, or 16.5mm interval)
 
 ## 3 Key + Rotary
   * 2  x Mechanical Key Switches
   * 2  x Relegendable Key Caps
   * 1  x Rotary Encoder
   * 1  x Knob
-  * 2  x WS2812 LEDs
+  * 2  x WS2812 LEDs (60 LED per M, or 16.5mm interval)
   * 2  x 100 ohm resistors
   * 2  x 1 uf capcitors
 
 ## 3 Key
   * 3  x Mechanical Key Switches
   * 3  x Relegendable Key Caps
-  * 3 x WS2812 LEDs
+  * 3  x WS2812 LEDs (60 LED per M, or 16.5mm interval)
 
 # Circuit Diagram
-![First Generation Circuit Diagram](/nfcdeck/assets/nfcdeck_circuit.svg)
+![NFC Deck Circuit Diagram](/nfcdeck/assets/nfcdeck_whole_circuit.svg)
+
+
+## Breaking the circuits down into individual components
+![9 Key Circuit Diagram](/nfcdeck/assets/9key-only.svg)
+![Buzzer Circuit Diagram](/nfcdeck/assets/buzzer-only.svg)
+![LED Strip Circuit Diagram](/nfcdeck/assets/led-only.svg)
+![NFC Circuit Diagram](/nfcdeck/assets/nfc-only.svg)
+
+
+
+
+
+![Rotary Encoder Circuit Diagram](/nfcdeck/assets/rotary_signal_cleaner.svg)
+
 
 # Wiring
 - Assemble a small circuit board with the rotary encoder 
