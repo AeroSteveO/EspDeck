@@ -15,6 +15,7 @@ api:
   password: ""
 
 ota:
+  platform: esphome
   password: ""
 
 dashboard_import:
