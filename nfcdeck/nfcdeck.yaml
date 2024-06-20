@@ -153,6 +153,7 @@ api:
     - rtttl.play: "write:d=24,o=5,b=100:b,b"
 
 ota:
+  platform: esphome
 
 wifi:
   ssid: !secret wifi_ssid
