@@ -59,5 +59,10 @@ Contributions are welcome to the project
 
 # Change Log
 
+  * With generation 2, we simplified the design, reducing the number of resistors needed in the wiring.
   * With generation 3, we begin to use the Matrix Keypad feature of EspHome, simplifying the wiring.
-  * With generation 4, we'll be adding WS2812 LEDs to backlight the key switches, providing an aveneue for notifying of a status from home assistant
+
+# To Do:
+  * Update the case designs to use heat set inserts to make them more maintainable rather than hot gluing the top down, also more professional
+  * Add WS2812 LEDs to backlight the key switches, providing an aveneue for notifying of a status from home assistant on the OG ESP Deck Designs
+  * Create a 3 key NFC deck variant with 2 key switches and a rotary (or keyswitch for the third)
