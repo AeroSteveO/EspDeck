@@ -454,6 +454,8 @@ sensor:
         pullup: true
         input: true
     publish_initial_value: true
+    max_value: 100
+    min_value: 0
     filters:
       - debounce: 0.1s
       # - exponential_moving_average:
