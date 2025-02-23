@@ -469,7 +469,6 @@ sensor:
 # Configure LED
 light:
   - platform: esp32_rmt_led_strip # was neopixelbus, but that doesn't support esp-idf platform
-    rmt_channel: 0
     rgb_order: GrB
     chipset: ws2812
     # variant: WS2812
