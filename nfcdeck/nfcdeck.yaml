@@ -497,7 +497,7 @@ light:
             static int x = 0;
             if (initial_run) {
               x = 0;
-              it.all() = ESPColor::BLACK;
+              it.all() = Color::BLACK;
             }
             if (x < it.size()) {
               it[x] = current_color;
@@ -514,7 +514,7 @@ light:
             }
             if (x > 0) {
               x -= 1;
-              it[x] = ESPColor::BLACK;
+              it[x] = Color::BLACK;
             }
   - platform: partition
     name: "Key 3 Light"
