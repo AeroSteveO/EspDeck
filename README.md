@@ -66,3 +66,7 @@ Contributions are welcome to the project
   * Update the case designs to use heat set inserts to make them more maintainable rather than hot gluing the top down, also more professional
   * Add WS2812 LEDs to backlight the key switches, providing an aveneue for notifying of a status from home assistant on the OG ESP Deck Designs
   * Create a 3 key NFC deck variant with 2 key switches and a rotary (or keyswitch for the third)
+
+# Star History
+(you guys rock)
+[![Star History Chart](https://api.star-history.com/svg?repos=AeroSteveO/EspDeck&type=date&legend=top-left)](https://www.star-history.com/#AeroSteveO/EspDeck&type=date&legend=top-left)
