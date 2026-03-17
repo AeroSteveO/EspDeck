@@ -73,6 +73,7 @@ api:
   password: ""
 
 ota:
+  platform: esphome
   password: ""
 
 # This should point to the public location of this yaml file.
